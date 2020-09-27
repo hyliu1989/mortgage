@@ -13,10 +13,10 @@ class Loan(object):
     This object can calculate amortization schedule and show summary statistics for the loan.
 
     :param principal: The original sum of money borrowed.
-    :param interest: The amount charged by lender for use of the assets in fraction, not percentage.
+    :param interest: The amount charged by lender for use of the assets over a term. Unit in fraction, not in %.
     :param term: The lifespan of the loan.
-    :param term_unit: Unit for the lifespan of the loan.
-    :param compounded: Frequency that interest is compounded
+    :param term_unit: Unit for the lifespan of the loan ("days", "months", "years").
+    :param compounded: Frequency that interest is compounded ("daily", "monthly", "annually")
     :param currency: Set the currency symbol for use with summarize
 
     Usage:
