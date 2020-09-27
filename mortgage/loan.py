@@ -36,18 +36,22 @@ class Loan(object):
         assert term_unit in term_units, 'term_unit can be either  days, months, or years'
         assert compounded in compound, 'Compounding can occur daily, monthly, or annually'
 
-        periods = {
-            'daily': 365,
-            'monthly': 12,
-            'annually': 1
-        }
+        if term_unit == 'years':
+            periods = {'daily': 365, 'monthly': 12, 'annually': 1}
+        elif term_unit == 'months': 
+            periods = {'daily': 30, 'monthly': 1}
+        elif term_unit == 'daily':
+            periods = {'daily': 1}
 
         self.principal = Decimal(principal)
         self.interest = Decimal(interest * 100) / 100
         self.term = term
         self.term_unit = term_unit
         self.compounded = compounded
-        self.n_periods = periods[compounded]
+        try:
+            self.n_periods = periods[compounded]
+        except KeyError:
+            raise ValueError(f'Compounding frequency ({compounded}) is larger than the term unit ({term_unit}).')
         self._schedule = self._amortize()
         self._currency = currency
 
