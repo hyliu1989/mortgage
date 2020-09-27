@@ -6,6 +6,7 @@ from typing import Tuple
 Installment = namedtuple('Installment', 'number payment interest principal total_interest balance')
 
 
+# TODO: review the use of Decimal to make all using that.
 class Loan(object):
     """
     :class:`Loan <Loan>` object used to create a loan.
@@ -25,6 +26,7 @@ class Loan(object):
         <Loan principal=200000, interest=0.04125, term=15>
     """
 
+    # TODO: add `closing_fee`
     def __init__(self, principal, interest, term, term_unit='years', compounded='monthly', currency='$'):
 
         term_units = {'days', 'months', 'years'}
@@ -82,9 +84,9 @@ class Loan(object):
     def _monthly_payment(self):
         principal = self.principal
         _int = self.interest
-        num = self.n_periods
+        num = self.n_periods  # TODO: review this
         term = self.term
-        payment = principal * _int / num / (1 - (1 + _int / num) ** (- num * term))
+        payment = principal * _int / num / (1 - (1 + _int / num) ** (- num * term))  # TODO: and this
         return payment
 
     @property
@@ -105,7 +107,7 @@ class Loan(object):
         return self._quantize(amt)
 
     @property
-    def apr(self) -> Decimal:
+    def apr(self) -> Decimal:  # TODO: this does not conform with the BoA definition
         """
         Return the annual percentage rate (APR).
 
@@ -123,7 +125,7 @@ class Loan(object):
         return self._quantize(apr * 100)
 
     @property
-    def apy(self) -> Decimal:
+    def apy(self) -> Decimal:  # TODO: to understand what this is...
         """
         Return the annual percentage yield (APY).
 
